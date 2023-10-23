@@ -15,11 +15,12 @@ mongoose.connect(url)
     logger.info('error connecting to MongoDB:', error.message)
   })
 
-const initialSchema = new mongoose.Schema({
-    text: String
+  const cardSchema = new mongoose.Schema({
+    title: String,
+    text: String,
+    isDone: Boolean
 })
-
-initialSchema.set('toJSON', {
+cardSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -27,4 +28,4 @@ initialSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Card', initialSchema)
+module.exports = mongoose.model('Card', cardSchema)
