@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: Todo API
+  version: 1.0.0
+paths:
+  /todos:
+    get:
+      summary: Получить список всех задач (Todos)
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              example:
+                - title: Пример задачи 1
+                  text: Описание задачи 1
+                  isDone: false
+                - title: Пример задачи 2
+                  text: Описание задачи 2
+                  isDone: true
+    post:
+      summary: Создать новую задачу (Todo)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                text:
+                  type: string
+                isDone:
+                  type: boolean
+            example:
+              title: Новая задача
+              text: Описание новой задачи
+              isDone: false
+      responses:
+        '201':
+          description: Задача (Todo) создана успешно
+  /todos/{todoId}:
+    parameters:
+      - name: todoId
+        in: path
+        required: true
+        description: Идентификатор задачи (Todo)
+        schema:
+          type: string
+    get:
+      summary: Получить задачу (Todo) по ID
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              example:
+                title: Пример задачи 1
+                text: Описание задачи 1
+                isDone: false
+        '404':
+          description: Задача (Todo) не найдена
+    put:
+      summary: Обновить задачу (Todo) по ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                text:
+                  type: string
+                isDone:
+                  type: boolean
+            example:
+              title: Измененная задача
+              text: Обновленное описание
+              isDone: true
+      responses:
+        '200':
+          description: Задача (Todo) обновлена успешно
+        '404':
+          description: Задача (Todo) не найдена
+    delete:
+      summary: Удалить задачу (Todo) по ID
+      responses:
+        '204':
+          description: Задача (Todo) удалена успешно
+        '404':
+          description: Задача (Todo) не найдена
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        isDone:
+          type: boolean
+      example:
+        title: Пример задачи
+        text: Описание задачи
+        isDone: false
