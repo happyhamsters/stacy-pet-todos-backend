@@ -1,20 +1,16 @@
-require('dotenv').config()
-const express = require('express')
-const app = express()
-const Card = require('./models/card')
-const middleware = require('./utils/middleware')
-
-app.use(middleware.requestLogger)
+const app = require('./app')
+const Todo = require('./models/todo')
+const config = require('./utils/config')
+const logger = require('./utils/logger')
 
 app.get('/', (request, response) => {
-  Card
+  Todo
     .find({})
-    .then(cards => {
-      response.json(cards)
+    .then(todos => {
+      response.json(todos)
     })
 })
 
-const PORT = process.env.PORT
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+app.listen(config.PORT, () => {
+  logger.info(`Server running on port ${config.PORT}`)
 })
