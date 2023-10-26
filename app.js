@@ -5,6 +5,7 @@ const cors = require('cors')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
+const todosRouter = require('./controllers/todos')
 
 mongoose.set('strictQuery', false)
 
@@ -22,5 +23,7 @@ app.use(cors())
 app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
+
+app.use('/api/todos', todosRouter)
 
 module.exports = app
