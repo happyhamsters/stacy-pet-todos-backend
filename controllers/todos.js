@@ -13,7 +13,7 @@ todosRouter.get('/:id', (request, response, next) => {
       if (todo) {
         response.json(todo)
       } else {
-        response.status(404).end()
+        response.status(404).send({ error: 'Couldn\'t find to do with id ' + request.params.id })
       }
     })
     .catch(error => next(error))
@@ -43,8 +43,12 @@ todosRouter.post('/', (request, response, next) => {
 
 todosRouter.delete('/:id', (request, response, next) => {
     Todo.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end()
+    .then(result => {
+      if(result) {
+        response.status(204).end()
+    } else {
+        response.status(404).send({ error: 'Couldn\'t find to do with id ' + request.params.id })
+    }
     })
     .catch(error => next(error))
 })
@@ -59,7 +63,11 @@ todosRouter.put('/:id', (request, response, next) => {
   }
   Todo.findByIdAndUpdate(request.params.id, todo, { new: true })
     .then(updatedTodo => {
+      if(updatedTodo) {  
       response.json(updatedTodo)
+      } else {
+        response.status(404).send({ error: 'Couldn\'t find to do with id ' + request.params.id })
+    }
     })
     .catch(error => next(error))
 })

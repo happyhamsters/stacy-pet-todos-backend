@@ -26,4 +26,7 @@ app.use(middleware.requestLogger)
 
 app.use('/api/todos', todosRouter)
 
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
+
 module.exports = app
