@@ -36,7 +36,7 @@ todosRouter.post('/', (request, response, next) => {
 
   todo.save()
     .then(savedTodo => {
-      response.json(savedTodo)
+      response.status(201).json(savedTodo)
     })
     .catch(error => next(error))
 })
