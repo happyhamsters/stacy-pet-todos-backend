@@ -1,17 +1,19 @@
 const mongoose = require('mongoose')
 
-const url = MONGODB_URI
+const url = process.env.MONGODB_URI
 
 mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
-const initialSchema = new mongoose.Schema({
-    text: String
+const todoSchema = new mongoose.Schema({
+    title: String,
+    text: String,
+    isDone: Boolean
 })
 
-const Card = mongoose.model('Card', initialSchema)
+const Todo = mongoose.model('Todo', todoSchema)
 
 
-Card.find({}).then(result => {
+Todo.find({}).then(result => {
   mongoose.connection.close()
 })
