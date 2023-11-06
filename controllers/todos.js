@@ -22,12 +22,6 @@ todosRouter.get('/:id', (request, response, next) => {
 todosRouter.post('/', (request, response, next) => {
   const body = request.body
 
-  if (!body.title || !body.text) {
-    return response.status(400).json({ 
-      error: 'title or text missing' 
-    })
-  }
-
   const todo = new Todo({
     title: body.title,
     text: body.text,
