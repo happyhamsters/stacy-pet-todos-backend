@@ -48,13 +48,8 @@ todosRouter.delete('/:id', (request, response, next) => {
 })
 
 todosRouter.put('/:id', (request, response, next) => {
-  const body = request.body
+  const todo = request.body
 
-  const todo = {
-    title: body.title,
-    text: body.text,
-    isDone: false,
-  }
   Todo.findByIdAndUpdate(request.params.id, todo, { new: true })
     .then(updatedTodo => {
       if(updatedTodo) {  
